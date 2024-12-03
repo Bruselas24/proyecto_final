@@ -1,0 +1,47 @@
+<h1>Productos</h1>
+
+<!-- Filtro y ordenamiento -->
+<form method="get" action="/products">
+  <label for="category">Categoría:</label>
+  <input type="text" name="query" id="category" value="{{query}}" placeholder="Filtrar por categoría">
+  
+  <label for="sort">Ordenar por precio:</label>
+  <select name="sort" id="sort">
+    <option value="">Sin orden</option>
+    <option value="asc" {{#if (eq sort 'asc')}}selected{{/if}}>Ascendente</option>
+    <option value="desc" {{#if (eq sort 'desc')}}selected{{/if}}>Descendente</option>
+  </select>
+  
+  <label for="limit">Productos por página:</label>
+  <input type="number" name="limit" id="limit" value="{{limit}}" min="1">
+  
+  <label for="page">Página:</label>
+  <input type="number" name="page" id="page" value="{{page}}" min="1">
+
+  <button type="submit">Filtrar</button>
+</form>
+
+<!-- Lista de productos -->
+<ul>
+  {{#each products}}
+    
+    <li>
+      <h3>{{this.name}}</h3>
+      <p>{{this.price}} $</p>
+      <a href="/products/{{this._id}}">Ver detalles</a>
+    </li>
+  {{/each}}
+</ul>
+
+<!-- Paginación -->
+<div>
+  {{#if hasPrevPage}}
+    <a href="{{prevLink}}">Página anterior</a>
+  {{/if}}
+
+  <span>Página {{page}}</span>
+
+  {{#if hasNextPage}}
+    <a href="{{nextLink}}">Página siguiente</a>
+  {{/if}}
+</div>
